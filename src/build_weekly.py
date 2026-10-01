@@ -3,7 +3,7 @@ from sqlalchemy import text
 from db import get_engine
 
 FIRST_WEEK = "2017-01-02"   # a Monday
-LAST_WEEK = "2018-08-20"    # last full week (ends Sunday 2018-08-26)
+LAST_WEEK = "2018-08-13"    # last reliable week (data fades out after 2018-08-19)
 
 STEPS = [
     "CREATE SCHEMA IF NOT EXISTS features",
@@ -26,7 +26,7 @@ STEPS = [
         FROM clean.order_items i
         JOIN clean.products p ON p.product_id = i.product_id
         WHERE i.purchased_at >= '{FIRST_WEEK}'
-          AND i.purchased_at < '2018-08-27'
+          AND i.purchased_at < '2018-08-20'
         GROUP BY 1, 2
     )
     SELECT c.category, w.week, COALESCE(s.units, 0) AS units
@@ -51,7 +51,7 @@ with engine.connect() as conn:
     """)).one()
     expected = conn.execute(text(f"""
         SELECT count(*) FROM clean.order_items
-        WHERE purchased_at >= '{FIRST_WEEK}' AND purchased_at < '2018-08-27'
+        WHERE purchased_at >= '{FIRST_WEEK}' AND purchased_at < '2018-08-20'
     """)).scalar()
 
 print(f"rows: {rows:,}   weeks: {weeks}   categories: {cats}")
