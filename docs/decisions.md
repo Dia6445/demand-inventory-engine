@@ -28,3 +28,9 @@
 - Metrics: MAE and WAPE. MAPE is not used because 31% of the cells are zero.
 - Backtest: the last 20 weeks, one week ahead, training only on earlier weeks.
 - Unexplained demand drop in the week of 2018-05-21 (about half of the previous week). All models fail there. The cause is not confirmed.
+
+## Product-level experiment (result)
+- 309 products had 15+ active training weeks. They cover only 11% of test-period units.
+- Backtest WAPE: last_week 0.981, avg_4_weeks 0.999, always_zero 1.000, avg_12_weeks 1.180, category_share 1.655.
+- No method beat "always predict zero" by more than 2%. Product-level point forecasts are not useful here.
+- Decision: forecast at category level (blend model). Individual products get a stock rule, not a point forecast.
