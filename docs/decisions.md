@@ -34,3 +34,10 @@
 - Backtest WAPE: last_week 0.981, avg_4_weeks 0.999, always_zero 1.000, avg_12_weeks 1.180, category_share 1.655.
 - No method beat "always predict zero" by more than 2%. Product-level point forecasts are not useful here.
 - Decision: forecast at category level (blend model). Individual products get a stock rule, not a point forecast.
+
+## Decision layer (result)
+- Order rule: blend forecast + k x (std of the previous 8 weeks). Each week starts fresh, no carry-over stock, no delivery delay.
+- k = 0: fill rate 86.9%, stockouts in 41.5% of category-weeks. k = 1: fill rate 95.7%, 24.9% of ordered units left over. k = 3: fill rate 99.5%, 45.5% left over.
+- At k = 1 the four models are within 1 point of fill rate. The blend (95.7%) is slightly ahead of last_week (95.1%) with the same leftover stock. avg_4_weeks needs k = 1.25 and leaves 27.5% over.
+- The safety buffer matters more than the choice of forecasting model.
+- Limits: k was chosen on the same 20 weeks it was tested on, and leftover stock is overstated because it is not carried over.
