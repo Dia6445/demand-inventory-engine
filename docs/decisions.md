@@ -41,3 +41,10 @@
 - At k = 1 the four models are within 1 point of fill rate. The blend (95.7%) is slightly ahead of last_week (95.1%) with the same leftover stock. avg_4_weeks needs k = 1.25 and leaves 27.5% over.
 - The safety buffer matters more than the choice of forecasting model.
 - Limits: k was chosen on the same 20 weeks it was tested on, and leftover stock is overstated because it is not carried over.
+
+## Failure test 1: Black Friday 2017 (result)
+- Week of 2017-11-20: units 3,490 vs 1,487 the week before (2.3x). WAPE about 0.6 for all models (normal: 0.2 to 0.3).
+- Order rule (blend + 1 buffer): fill rate 46.3%, stockouts in 57% of categories (normal: about 95%).
+- last_week overreacts the week after (WAPE 0.534). avg_4_weeks stays polluted for weeks (WAPE 1.154 on 2017-12-18).
+- The buffer (8-week std) is inflated after the spike, so ordering is probably too high then (not measured).
+- Only one Black Friday in the data, so a model cannot learn it.
